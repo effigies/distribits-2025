@@ -1,5 +1,6 @@
 MIT License
 
+Copyright (c) 2023 Chris Markiewicz
 Copyright (c) 2022 Russ Poldrack
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

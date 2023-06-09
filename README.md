@@ -1,8 +1,9 @@
 # talks-template
 
-This is a talk template for Markdown-based presentations using Quarto.  
+This is a talk template for Markdown-based presentations using Quarto, forked from
+Russ Poldrack's template.
 
-NOTE:  If you are not Russ Poldrack then you should first fork this repo and modify the files to replace my name and information with your own!
+NOTE: This contains speaker-specific information. Fork and modify before using the template.
 
 ### Single Talk in its Own Repo (STOR) Template
 
