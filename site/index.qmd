@@ -13,6 +13,7 @@
 #| output: asis
 
 # this uses the GitHub API to find a all releases for this repo
+breakpoint()
 
 from github import Github
 import pandas as pd
