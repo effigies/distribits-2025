@@ -14,7 +14,6 @@
 
 # this uses the GitHub API to find a all releases for this repo
 import os
-print(os.__file__)
 from github import Github
 import pandas as pd
 import requests
@@ -53,8 +52,6 @@ if os.path.exists(token_file):
         print(f'{release_date}: {release.title}')
         print(f"\n- [PDF]({os.path.join(site_base, 'pdfs', release.tag_name + '.pdf')}) [Full release]({release.html_url})")
         print('\n\n')
-
-
 
 ```
 

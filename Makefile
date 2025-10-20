@@ -1,5 +1,5 @@
 # This tag should match the release tag in Github
-TAG = "Topic_Venue_month_day_year"
+TAG = "OpenNeuro_Distribits_2025_10_22"
 
 all: render-talk push-talk render-pdf push-pdf render-site push-site
 
