@@ -1,20 +1,158 @@
 ---
-title: "Talk template" 
-author: Chris Markiewicz
+title: "Maintaining large datasets at scale" 
+author: Christopher J. Markiewicz
 institute: Stanford University
 title-slide-attributes:
-    data-background-image: ./images/stanford_background.jpg
-    data-background-opacity: "0.5"
+    data-background-image: ./images/openneuro_hex.png
+    data-background-opacity: "0.2"
 format:
   revealjs: 
-    footer: "https://effigies.github.io/talks-template/"
+    logo: https://raw.githubusercontent.com/OpenNeuroOrg/openneuro/refs/heads/master/packages/openneuro-app/src/scripts/components/assets/on-dark-horz.svg
+    footer: "https://effigies.github.io/distribits-2025/"
     slide-number: true
     chalkboard: 
       buttons: false
     preview-links: auto
-    theme: [default, cjm-theme.scss]
+    theme: [default] #, cjm-theme.scss]
     height: 1080
     width: 1920
 ---
 
-## Template slide
+<iframe src="https://openneuro.org" width="100%" height="70%" style="border: 0; margin-top: 15px" /></iframe>
+
+- ~130TB of public data (180TB total)
+- ~1300 private datasets
+
+---
+
+<iframe src="https://openneuro.org/datasets/ds005256" width="100%" height="90%" style="border: 0; margin-top: 15px" /></iframe>
+
+## OpenNeuro goals
+
+### High availability
+
+- Files are published to S3 (`exporttree=yes versioning=yes`)
+- Datasets are published to GitHub
+  - Versions are lightweight tags
+
+*No need to hit OpenNeuro servers to retrieve data*
+
+<br/>
+
+### Data integrity
+
+- Routine `git annex fsck` on server and S3 remotes
+- Cold storage backups
+- Public mirrors of git repositories
+
+<!--
+
+## Problems
+
+With &gt;2500 datasets, supplied by users, managed by an evolving code base,
+problems arise.
+
+::: {.incremental}
+
+- File corruption in transit cannot be detected server-side
+- Files can become un-annexed (race condition)
+- Older datasets with unversioned S3 remotes need upgrading to re-release
+- Exports can be interrupted and need to be resumed
+
+:::
+
+-->
+
+## Detecting problems
+
+With &gt;2500 datasets, supplied by users, managed by an evolving code base,
+problems arise.
+How to detect them?
+
+. . .
+
+Sync failures with GitHub are often a good indicator:
+
+```console
+󰅂 scripts/check-github-sync
+2025-10-03 19:00:49 [error    ] Missing latest tag             dataset=ds004021 tag=1.0.1
+2025-10-03 19:00:50 [error    ] Missing latest tag             dataset=ds004212 tag=3.0.0
+2025-10-03 19:00:51 [error    ] GraphQL query error           
+2025-10-03 19:00:51 [warning  ] mismatch: b7b87f8(2.0.3) != c995770 dataset=ds004516 tag=2.0.3
+2025-10-03 19:00:51 [error    ] Missing latest tag             dataset=ds004639 tag=1.0.0
+2025-10-03 19:00:52 [warning  ] mismatch: 2b53548(1.0.2) != 8222107 dataset=ds004837 tag=1.0.2
+2025-10-03 19:00:52 [error    ] GraphQL query error           
+2025-10-03 19:00:54 [error    ] Missing latest tag             dataset=ds005293 tag=1.0.0
+2025-10-03 19:00:54 [error    ] Missing latest tag             dataset=ds005381 tag=1.1.0
+2025-10-03 19:00:56 [warning  ] mismatch: 554e144(1.0.0) != 8f0cfb1 dataset=ds006111 tag=1.0.0
+2025-10-03 19:00:56 [error    ] Missing latest tag             dataset=ds006319 tag=1.0.0
+Fetching ds006801 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 1496/1502
+Checking ds006468 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 1496/1502
+```
+
+. . .
+
+Typically a missing tag means an incomplete export or large files outside the annex.
+
+\
+
+<https://github.com/OpenNeuroOrg/openneuro/blob/master/scripts/check-github-sync>
+
+\
+
+Wraps: `git ls-remote $REPO $TAG`
+
+## Problems and solutions
+
+::: {.incremental}
+
+- Problem: File corruption in transit cannot be detected server-side
+  - Solution: Upload client hashes files, creates a commit, and pushes
+  - <https://github.com/OpenNeuroOrg/openneuro/blob/master/cli/src/worker/git.ts>
+
+- Problem: Files can become un-annexed (typically race condition)
+  - Solution: Replay commits since last publishable state, fixing as you go
+  - <https://github.com/OpenNeuroOrg/openneuro/blob/master/scripts/reannex-to-tag.sh>
+  - `git rebase -X theirs --exec $EXEC_SCRIPT $REF`
+  - `git diff-tree [...] | git rm --cached --pathspec-from-file=- && git annex add && git commit`
+
+- Problem: Older datasets have unversioned S3 remotes
+  - Solution: Clear out S3 prefix and re-export
+
+- Problem: Exports can be interrupted
+  - Solution: Re-export tags and git push
+
+:::
+
+## Quick, copy-on-write backups
+
+Before potentially destructive operations, we make full backups.
+Using `git clone` and `rsync --link-dest`, this takes seconds.
+
+```bash
+% DS=ds005256
+% git clone $DS{,.bak}
+Cloning into 'ds005256.bak'...
+done.
+Updating files: 100% (28408/28408), done.
+% rsync -a --ignore-existing --link-dest=../$DS $DS{,.bak}/.
+% rsync -a --delete $DS{,.bak}/.
+```
+
+. . .
+
+Less than 20s and 1GB needed to back up a 2TB dataset:
+
+```bash
+% du -sh $DS.bak
+2.1T	ds005256.bak
+% du -sch $DS*
+2.1T	ds005256
+570M	ds005256.bak
+2.1T	total
+% diff -r $DS*
+```
+
+---
+
+![](https://raw.githubusercontent.com/OpenNeuroOrg/openneuro/refs/heads/master/packages/openneuro-app/src/scripts/components/assets/on-dark.svg){fig-align="center" height=50% width=50%}
