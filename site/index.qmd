@@ -13,9 +13,7 @@
 #| output: asis
 
 # this uses the GitHub API to find a all releases for this repo
-%pdb
-breakpoint()
-
+print(__file__)
 from github import Github
 import pandas as pd
 import requests
