@@ -8,7 +8,7 @@ title-slide-attributes:
 format:
   revealjs: 
     logo: https://raw.githubusercontent.com/OpenNeuroOrg/openneuro/refs/heads/master/packages/openneuro-app/src/scripts/components/assets/on-dark-horz.svg
-    footer: "https://effigies.github.io/distribits-2025/"
+    footer: "https://effigies.github.io/distribits-2025/talk"
     slide-number: true
     chalkboard: 
       buttons: false
