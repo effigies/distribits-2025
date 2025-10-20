@@ -104,11 +104,14 @@ Wraps: `git ls-remote $REPO $TAG`
 
 ## Problems and solutions
 
-::: {.incremental}
+::: {.fragment .fade-in-then-semi-out}
 
 - Problem: File corruption in transit cannot be detected server-side
   - Solution: Upload client hashes files, creates a commit, and pushes
   - <https://github.com/OpenNeuroOrg/openneuro/blob/master/cli/src/worker/git.ts>
+
+:::
+::: {.fragment .fade-in-then-semi-out}
 
 - Problem: Files can become un-annexed (typically race condition)
   - Solution: Replay commits since last publishable state, fixing as you go
@@ -116,8 +119,14 @@ Wraps: `git ls-remote $REPO $TAG`
   - `git rebase -X theirs --exec $EXEC_SCRIPT $REF`
   - `git diff-tree [...] | git rm --cached --pathspec-from-file=- && git annex add && git commit`
 
+:::
+::: {.fragment .fade-in-then-semi-out}
+
 - Problem: Older datasets have unversioned S3 remotes
   - Solution: Clear out S3 prefix and re-export
+
+:::
+::: {.fragment .fade-in-then-semi-out}
 
 - Problem: Exports can be interrupted
   - Solution: Re-export tags and git push
