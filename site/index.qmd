@@ -13,12 +13,12 @@
 #| output: asis
 
 # this uses the GitHub API to find a all releases for this repo
-print(__file__)
+import os
+print(os.__file__)
 from github import Github
 import pandas as pd
 import requests
 from git import Repo
-import os
 
 
 # get info about present repo
