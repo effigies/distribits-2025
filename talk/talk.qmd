@@ -123,7 +123,7 @@ Wraps: `git ls-remote $REPO $TAG`
 ::: {.fragment .fade-in-then-semi-out}
 
 - Problem: Older datasets have unversioned S3 remotes
-  - Solution: Clear out S3 prefix and re-export
+  - Solution: Clear out S3 prefix, recreate the remote, and re-export
 
 :::
 ::: {.fragment .fade-in-then-semi-out}
