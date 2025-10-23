@@ -7,25 +7,25 @@ title-slide-attributes:
     data-background-opacity: "0.2"
 format:
   revealjs: 
-    logo: https://raw.githubusercontent.com/OpenNeuroOrg/openneuro/refs/heads/master/packages/openneuro-app/src/scripts/components/assets/on-dark-horz.svg
-    footer: "https://effigies.github.io/distribits-2025"
+    logo: https://raw.githubusercontent.com/OpenNeuroOrg/openneuro/refs/heads/master/packages/openneuro-app/src/scripts/components/assets/on-light-horz.svg
+    footer: "<https://effigies.github.io/distribits-2025>"
     slide-number: true
     chalkboard: 
       buttons: false
     preview-links: auto
-    theme: [default] #, cjm-theme.scss]
+    theme: [dark]
     height: 1080
     width: 1920
 ---
 
-<iframe src="https://openneuro.org" width="100%" height="70%" style="border: 0; margin-top: 15px" /></iframe>
+<iframe src="https://openneuro.org" width="100%" height="70%" style="border: 0; margin-top: 15px; background-color: #ffffff" /></iframe>
 
 - ~130TB of public data (180TB total)
 - ~1300 private datasets
 
 ---
 
-<iframe src="https://openneuro.org/datasets/ds005256" width="100%" height="90%" style="border: 0; margin-top: 15px" /></iframe>
+<iframe src="https://openneuro.org/datasets/ds005256" width="100%" height="90%" style="border: 0; margin-top: 15px; background-color: #ffffff" /></iframe>
 
 ## OpenNeuro goals
 
@@ -147,4 +147,4 @@ Less than 20s and 1GB needed to back up a 2TB dataset:
 
 ---
 
-![](https://raw.githubusercontent.com/OpenNeuroOrg/openneuro/refs/heads/master/packages/openneuro-app/src/scripts/components/assets/on-dark.svg){fig-align="center" height=50% width=50%}
+![](https://raw.githubusercontent.com/OpenNeuroOrg/openneuro/refs/heads/master/packages/openneuro-app/src/scripts/components/assets/on-light.svg){fig-align="center" height=50% width=50%}
