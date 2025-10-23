@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "—",
     "section": "",
-    "text": "Current version of talk"
+    "text": "Current version of talk\n\n\n/tmp/ipykernel_305709/2074322713.py:25: DeprecationWarning: Argument login_or_token is deprecated, please use auth=github.Auth.Token(...) instead\n  g = Github(token)\n2025-10-23: Distribits - 2025\n\nPDF Full release\n\n/tmp/ipykernel_305709/2074322713.py:38: DeprecationWarning: Use name instead\n  print(f'{release_date}: {release.title}')"
   },
   {
     "objectID": "index.html#talks-about-the-template-project",
@@ -18,6 +18,6 @@
     "href": "index.html#maintaining-large-datasets-at-scale",
     "title": "—",
     "section": "",
-    "text": "Current version of talk"
+    "text": "Current version of talk\n\n\n/tmp/ipykernel_305709/2074322713.py:25: DeprecationWarning: Argument login_or_token is deprecated, please use auth=github.Auth.Token(...) instead\n  g = Github(token)\n2025-10-23: Distribits - 2025\n\nPDF Full release\n\n/tmp/ipykernel_305709/2074322713.py:38: DeprecationWarning: Use name instead\n  print(f'{release_date}: {release.title}')"
   }
 ]
