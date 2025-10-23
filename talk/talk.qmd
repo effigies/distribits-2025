@@ -45,23 +45,6 @@ format:
 - Cold storage backups
 - Public mirrors of git repositories
 
-<!--
-
-## Problems
-
-With &gt;2500 datasets, supplied by users, managed by an evolving code base,
-problems arise.
-
-::: {.incremental}
-
-- File corruption in transit cannot be detected server-side
-- Files can become un-annexed (race condition)
-- Older datasets with unversioned S3 remotes need upgrading to re-release
-- Exports can be interrupted and need to be resumed
-
-:::
-
--->
 
 ## Detecting problems
 
