@@ -14,7 +14,7 @@
 
 # this uses the GitHub API to find a all releases for this repo
 import os
-from github import Github
+import github
 import pandas as pd
 import requests
 from git import Repo
@@ -36,21 +36,17 @@ if os.path.exists(token_file):
     with open(token_file) as f:
         token = f.read().strip()
 
-g = Github(token)
+g = github.Github(auth=github.Auth.Token(token))
 
-# get that user by username
-user = g.get_user(username)
-
-
-repo_info = g.get_repo(f'{user.login}/{repo_name}')
+repo_info = g.get_repo(f'{username}/{repo_name}')
 releases = list(repo_info.get_releases())
 
 site_base = 'https://effigies.github.io/' + repo_name.split('/')[-1]
 
 for release in releases:
     release_date = release.published_at.strftime('%Y-%m-%d')
-    print(f'{release_date}: {release.title}')
-    print(f"\n- [PDF]({os.path.join(site_base, 'pdfs', release.name + '.pdf')}) [Full release]({release.html_url})")
+    print(f'{release_date}: {release.name}')
+    print(f"\n- [PDF]({os.path.join(site_base, 'pdfs', release.tag_name + '.pdf')}) [Full release]({release.html_url})")
     print('\n\n')
 
 ```
