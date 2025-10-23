@@ -3,14 +3,14 @@ project:
   output-dir: ../docs
 
 website:
-  title: "Template talk"
+  title: "Maintaining large datasets at scale"
   navbar:
     left:
-      - href: https://github.com/effigies/talks-template
+      - href: https://github.com/effigies/distribits-2025
         text: Github page
 
 format:
   html:
-    theme: flatly
+    theme: darkly
     css: styles.css
 
