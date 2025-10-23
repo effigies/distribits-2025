@@ -24,7 +24,7 @@ render-site:
 
 push-site:
 	git add docs/*
-	git commit -m"updating changed files"
+	git diff --exit-code || git commit -m"updating changed files"
 	git push origin main
 
 render-pdf:
